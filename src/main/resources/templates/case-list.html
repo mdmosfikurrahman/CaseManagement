@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .add-link {
+            display: block;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<h1>Case List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Sl No</th>
+        <th>Organization Name</th>
+        <th>BIN</th>
+        <th>Case Status</th>
+        <th>Case No</th>
+        <th>Case Date</th>
+        <th>Demand</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="caseObject, stat : ${cases}">
+        <td th:text="${stat.index + 1}"></td>
+        <td th:text="${caseObject.organizationName}"></td>
+        <td th:text="${caseObject.bin}"></td>
+        <td th:text="${caseObject.caseStatus}"></td>
+        <td th:text="${caseObject.caseNo}"></td>
+        <td th:text="${caseObject.caseDate}"></td>
+        <td th:text="${caseObject.demand}"></td>
+        <td>
+            <a th:href="@{/cases/{id}(id=${caseObject.id})}">View</a> |
+            <a th:href="@{/cases/edit/{id}(id=${caseObject.id})}">Edit</a> |
+            <a th:href="@{/cases/delete/{id}(id=${caseObject.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a class="add-link" href="/cases/add">Add New Case</a>
+</body>
+</html>
