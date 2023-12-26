@@ -8,6 +8,7 @@ import mmr.epde.casemanagement.model.caseModule.CourtName;
 import mmr.epde.casemanagement.repository.CaseRepository;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +24,9 @@ public class CaseServiceImpl implements CaseService {
                                CourtName courtName, Date hearingDate, String verdict, List<String> officersList,
                                byte[] attachment) {
         CaseInfo newCase = new CaseInfo();
+        String caseNo = generateCaseNumber();
         setValueForCase(organizationName, bin, caseSummary, caseStatus, courtName, hearingDate, verdict, officersList, attachment, newCase);
+        newCase.setCaseNo(caseNo);
         return caseRepository.save(newCase);
     }
 
@@ -81,4 +84,17 @@ public class CaseServiceImpl implements CaseService {
         newCase.setAttachment(attachment);
     }
 
+    private String generateCaseNumber() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        String formattedDate = dateFormat.format(new Date());
+        Long lastId = caseRepository.findLastId();
+
+        if (lastId == null) {
+            lastId = 1L;
+        }
+
+        String formattedId = String.format("%04d", lastId);
+
+        return formattedDate + formattedId;
+    }
 }
