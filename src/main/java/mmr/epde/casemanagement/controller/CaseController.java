@@ -3,6 +3,8 @@ package mmr.epde.casemanagement.controller;
 import mmr.epde.casemanagement.model.CaseResponse;
 import mmr.epde.casemanagement.model.CaseRequest;
 import mmr.epde.casemanagement.service.CaseService;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -87,5 +89,24 @@ public class CaseController {
 
         return "redirect:/cases/list";
     }
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<byte[]> downloadAttachment(@PathVariable Long id) {
+        CaseResponse caseResponse = caseService.getCaseDetailsById(id);
+
+        if (caseResponse != null && caseResponse.getAttachment() != null) {
+            String bin = caseResponse.getBin();
+
+            String safeFilename = bin.replaceAll("[^a-zA-Z0-9.-]", "_");
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .header("Content-Disposition", "attachment; filename=\"" + safeFilename + ".pdf\"")
+                    .body(caseResponse.getAttachment());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
 

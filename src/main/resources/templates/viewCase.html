@@ -51,6 +51,11 @@
     a:hover {
       text-decoration: underline;
     }
+
+    .attachment-link {
+      display: block;
+      margin-top: 10px;
+    }
   </style>
 </head>
 
@@ -64,17 +69,29 @@
   <label>BIN:</label>
   <span th:text="${caseResponse.bin}"></span>
 
+  <label>Case Summary:</label>
+  <span th:text="${caseResponse.caseSummary}"></span>
+
   <label>Case Status:</label>
   <span th:text="${caseResponse.caseStatus}"></span>
 
-  <label>Case No:</label>
-  <span th:text="${caseResponse.caseNo}"></span>
+  <label>Court Name:</label>
+  <span th:text="${caseResponse.courtName}"></span>
 
-  <label>Case Date:</label>
-  <span th:text="${caseResponse.caseDate}"></span>
+  <label>Hearing Date:</label>
+  <span th:text="${#dates.format(caseResponse.hearingDate, 'yyyy-MM-dd')}"></span>
 
-  <label>Demand:</label>
-  <span th:text="${caseResponse.demand}"></span>
+  <label>Verdict:</label>
+  <span th:text="${caseResponse.verdict}"></span>
+
+  <label>Officers List:</label>
+  <span th:text="${caseResponse.officersList}"></span>
+
+  <!-- Downloadable Attachment Link -->
+  <div class="attachment-link">
+    <label>Attachment:</label>
+    <a th:href="@{'/cases/download/' + ${caseResponse.id}}">Download Attachment</a>
+  </div>
 
   <a th:href="@{'/cases/list'}">Back to Case List</a>
 </div>

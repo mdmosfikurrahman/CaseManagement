@@ -75,7 +75,14 @@ public class CaseServiceImpl implements CaseService {
                 caseEntity.getCaseStatus(),
                 caseEntity.getCaseNo(),
                 caseEntity.getCaseDate(),
-                caseEntity.getDemand()
+                caseEntity.getDemand(),
+                caseEntity.getCaseSummary(),
+                caseEntity.getCourtName(),
+                caseEntity.getHearingDate(),
+                caseEntity.getVerdict(),
+                caseEntity.getOfficersList(),
+                caseEntity.getAttachment()
         );
     }
+
 }
