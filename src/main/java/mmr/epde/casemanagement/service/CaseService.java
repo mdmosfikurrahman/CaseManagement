@@ -12,8 +12,5 @@ public interface CaseService {
     CaseInfo createCase(String organizationName, String bin, String caseSummary, CaseStatus caseStatus,
                         CourtName courtName, Date hearingDate, String verdict, List<String> officersList,
                         byte[] attachment);
-
-    List<CaseInfo> getAllCases();
-
     List<CaseResponse> getCaseDetails();
 }

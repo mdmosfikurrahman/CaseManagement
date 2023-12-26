@@ -6,7 +6,6 @@ import mmr.epde.casemanagement.model.CaseResponse;
 import mmr.epde.casemanagement.model.CaseStatus;
 import mmr.epde.casemanagement.model.CourtName;
 import mmr.epde.casemanagement.repository.CaseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -34,11 +33,6 @@ public class CaseServiceImpl implements CaseService {
         newCase.setOfficersList(officersList);
         newCase.setAttachment(attachment);
         return caseRepository.save(newCase);
-    }
-
-    @Override
-    public List<CaseInfo> getAllCases() {
-        return caseRepository.findAll();
     }
 
     @Override
