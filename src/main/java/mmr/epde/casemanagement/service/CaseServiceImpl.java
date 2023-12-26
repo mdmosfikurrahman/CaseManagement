@@ -38,14 +38,44 @@ public class CaseServiceImpl implements CaseService {
     @Override
     public List<CaseResponse> getCaseDetails() {
         return caseRepository.findAll().stream()
-                .map(caseEntity -> new CaseResponse(
-                        caseEntity.getOrganizationName(),
-                        caseEntity.getBin(),
-                        caseEntity.getCaseStatus(),
-                        caseEntity.getCaseNo(),
-                        caseEntity.getCaseDate(),
-                        caseEntity.getDemand()
-                ))
+                .map(this::convertToCaseResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public CaseResponse getCaseDetailsById(Long id) {
+        return caseRepository.findById(id)
+                .map(this::convertToCaseResponse)
+                .orElse(null);
+    }
+
+    @Override
+    public void editCase(Long id, String organizationName, String bin, String caseSummary, CaseStatus caseStatus,
+                         CourtName courtName, Date hearingDate, String verdict, List<String> officersList,
+                         byte[] attachment) {
+        caseRepository.findById(id).ifPresent(existingCase -> {
+            existingCase.setOrganizationName(organizationName);
+            existingCase.setBin(bin);
+            existingCase.setCaseSummary(caseSummary);
+            existingCase.setCaseStatus(caseStatus);
+            existingCase.setCourtName(courtName);
+            existingCase.setHearingDate(hearingDate);
+            existingCase.setVerdict(verdict);
+            existingCase.setOfficersList(officersList);
+            existingCase.setAttachment(attachment);
+            caseRepository.save(existingCase);
+        });
+    }
+
+    private CaseResponse convertToCaseResponse(CaseInfo caseEntity) {
+        return new CaseResponse(
+                caseEntity.getId(),
+                caseEntity.getOrganizationName(),
+                caseEntity.getBin(),
+                caseEntity.getCaseStatus(),
+                caseEntity.getCaseNo(),
+                caseEntity.getCaseDate(),
+                caseEntity.getDemand()
+        );
     }
 }

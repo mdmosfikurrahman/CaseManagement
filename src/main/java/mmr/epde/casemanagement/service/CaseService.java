@@ -13,4 +13,8 @@ public interface CaseService {
                         CourtName courtName, Date hearingDate, String verdict, List<String> officersList,
                         byte[] attachment);
     List<CaseResponse> getCaseDetails();
+    CaseResponse getCaseDetailsById(Long id);
+    void editCase(Long id, String organizationName, String bin, String caseSummary, CaseStatus caseStatus,
+                  CourtName courtName, Date hearingDate, String verdict, List<String> officersList,
+                  byte[] attachment);
 }

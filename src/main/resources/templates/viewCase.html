@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Case</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    h2 {
+      color: #007bff;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 5px;
+    }
+
+    div {
+      width: 50%;
+      margin-top: 20px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    span {
+      display: block;
+      margin-top: 5px;
+      color: #777;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007bff;
+      margin-right: 10px;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+<div>
+  <h2>Case Details</h2>
+
+  <label>Organization Name:</label>
+  <span th:text="${caseResponse.organizationName}"></span>
+
+  <label>BIN:</label>
+  <span th:text="${caseResponse.bin}"></span>
+
+  <label>Case Status:</label>
+  <span th:text="${caseResponse.caseStatus}"></span>
+
+  <label>Case No:</label>
+  <span th:text="${caseResponse.caseNo}"></span>
+
+  <label>Case Date:</label>
+  <span th:text="${caseResponse.caseDate}"></span>
+
+  <label>Demand:</label>
+  <span th:text="${caseResponse.demand}"></span>
+
+  <a th:href="@{'/cases/list'}">Back to Case List</a>
+</div>
+</body>
+
+</html>

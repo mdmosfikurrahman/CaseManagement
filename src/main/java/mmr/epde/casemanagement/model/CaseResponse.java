@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 public class CaseResponse {
+    private Long id;
     private String organizationName;
     private String bin;
     private CaseStatus caseStatus;

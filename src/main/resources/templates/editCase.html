@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Case</title>
+    <title>Edit Case</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -31,6 +31,7 @@
         label {
             display: block;
             margin-top: 10px;
+            font-weight: bold;
             color: #555;
         }
 
@@ -54,50 +55,62 @@
             cursor: pointer;
         }
 
-        input[type="submit"]:hover {
-            background-color: #45a049;
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
-<h2>Create Case</h2>
-<form th:action="@{/cases/create}" th:object="${caseRequest}" method="post" enctype="multipart/form-data">
+<h2>Edit Case</h2>
+
+<form th:action="@{'/cases/edit/' + ${caseResponse.id}}" th:object="${caseRequest}" method="post"
+      enctype="multipart/form-data">
+
     <label for="organizationName">Organization Name:</label>
     <input type="text" id="organizationName" name="organizationName" th:field="*{organizationName}" required>
-    <br>
+
     <label for="bin">BIN:</label>
     <input type="text" id="bin" name="bin" th:field="*{bin}" required>
-    <br>
+
     <label for="caseSummary">Case Summary:</label>
     <textarea id="caseSummary" name="caseSummary" th:field="*{caseSummary}" required></textarea>
-    <br>
+
     <label for="caseStatus">Case Status:</label>
     <select id="caseStatus" name="caseStatus" th:field="*{caseStatus}" required>
         <option th:each="status : ${T(mmr.epde.casemanagement.model.CaseStatus).values()}"
                 th:value="${status}" th:text="${status}"></option>
     </select>
-    <br>
+
     <label for="courtName">Court Name:</label>
     <select id="courtName" name="courtName" th:field="*{courtName}" required>
         <option th:each="court : ${T(mmr.epde.casemanagement.model.CourtName).values()}"
                 th:value="${court}" th:text="${court}"></option>
     </select>
-    <br>
+
     <label for="hearingDate">Hearing Date:</label>
     <input type="date" id="hearingDate" name="hearingDate" th:field="*{hearingDate}" required>
-    <br>
+
     <label for="verdict">Verdict:</label>
     <input type="text" id="verdict" name="verdict" th:field="*{verdict}" required>
-    <br>
+
     <label for="officersList">Officers List (comma-separated):</label>
     <input type="text" id="officersList" name="officersList" th:field="*{officersList}" required>
-    <br>
+
     <label>Attachment (PDF only):</label>
     <input type="file" th:field="*{attachment}" accept=".pdf" required />
-    <br>
-    <input type="submit" value="Create Case">
+
+    <input type="submit" value="Save Changes">
 </form>
+
+<a th:href="@{'/cases/list'}">Back to Case List</a>
 </body>
 
 </html>
