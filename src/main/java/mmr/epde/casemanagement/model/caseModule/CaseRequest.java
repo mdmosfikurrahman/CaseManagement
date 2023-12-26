@@ -18,4 +18,5 @@ public class CaseRequest {
     private String verdict;
     private List<String> officersList;
     private MultipartFile attachment;
+    private String binOrganization;
 }

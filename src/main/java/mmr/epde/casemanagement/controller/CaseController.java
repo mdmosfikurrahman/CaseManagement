@@ -37,13 +37,16 @@ public class CaseController {
     }
 
     @PostMapping("/create")
-    public String createCase(@ModelAttribute CaseRequest caseRequest,
-                             BindingResult result) throws IOException, ParseException {
+    public String createCase(@ModelAttribute CaseRequest caseRequest, BindingResult result) throws IOException, ParseException {
         if (result.hasErrors()) {
             return "createCase";
         }
 
-        caseService.createCase(caseRequest.getOrganizationName(), caseRequest.getBin(), caseRequest.getCaseSummary(),
+        String binOrganization = caseRequest.getBinOrganization();
+        String bin = extractBin(binOrganization);
+        String organizationName = extractOrganizationName(binOrganization);
+
+        caseService.createCase(organizationName, bin, caseRequest.getCaseSummary(),
                 caseRequest.getCaseStatus(), caseRequest.getCourtName(), parseDate(caseRequest.getHearingDate()),
                 caseRequest.getVerdict(), caseRequest.getOfficersList(), caseRequest.getAttachment().getBytes());
 
@@ -56,8 +59,13 @@ public class CaseController {
         return dateFormat.parse(dateStr);
     }
 
+    private String extractBin(String binOrganization) {
+        return binOrganization.substring(binOrganization.lastIndexOf("(") + 1, binOrganization.lastIndexOf(")")).trim();
+    }
 
-
+    private String extractOrganizationName(String binOrganization) {
+        return binOrganization.substring(0, binOrganization.indexOf("(")).trim();
+    }
 
     @GetMapping("/list")
     public String showCaseList(Model model) {
@@ -76,6 +84,8 @@ public class CaseController {
     @GetMapping("/edit/{id}")
     public String showEditCaseForm(@PathVariable Long id, Model model) {
         CaseResponse caseResponse = caseService.getCaseDetailsById(id);
+        List<BondApplicationDetails> bondApplicationDetailsList = bondApplicationDetailsRepository.findAll();
+        model.addAttribute("bondApplications", bondApplicationDetailsList);
         model.addAttribute("caseResponse", caseResponse);
         model.addAttribute("caseRequest", new CaseRequest());
         return "editCase";
@@ -87,12 +97,17 @@ public class CaseController {
             return "editCase";
         }
 
-        caseService.editCase(id, caseRequest.getOrganizationName(), caseRequest.getBin(), caseRequest.getCaseSummary(),
+        String binOrganization = caseRequest.getBinOrganization();
+        String organizationName = extractOrganizationName(binOrganization);
+        String bin = extractBin(binOrganization);
+
+        caseService.editCase(id, organizationName, bin, caseRequest.getCaseSummary(),
                 caseRequest.getCaseStatus(), caseRequest.getCourtName(), parseDate(caseRequest.getHearingDate()),
                 caseRequest.getVerdict(), caseRequest.getOfficersList(), caseRequest.getAttachment().getBytes());
 
         return "redirect:/cases/list";
     }
+
 
     @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> downloadAttachment(@PathVariable Long id) {

@@ -63,18 +63,14 @@
 <body>
 <h2>Create Case</h2>
 <form th:action="@{/cases/create}" th:object="${caseRequest}" method="post" enctype="multipart/form-data">
-    <label for="organizationName">Organization Name:</label>
-    <select id="organizationName" name="organizationName" th:field="*{organizationName}" required>
+    <label for="binOrganization">Organization Name (BIN):</label>
+    <select id="binOrganization" name="binOrganization" th:field="*{binOrganization}" required>
         <option th:each="bondApplication : ${bondApplications}"
-                th:value="${bondApplication.organizationName}" th:text="${bondApplication.organizationName}"></option>
+                th:value="${bondApplication.organizationName + ' (' + bondApplication.bin + ')'}"
+                th:text="${bondApplication.organizationName + ' (' + bondApplication.bin + ')'}"></option>
     </select>
     <br>
-    <label for="bin">BIN:</label>
-    <select id="bin" name="bin" th:field="*{bin}" required>
-        <option th:each="bondApplication : ${bondApplications}"
-                th:value="${bondApplication.bin}" th:text="${bondApplication.bin}"></option>
-    </select>
-    <br>
+
     <label for="caseSummary">Case Summary:</label>
     <textarea id="caseSummary" name="caseSummary" th:field="*{caseSummary}" required></textarea>
     <br>
