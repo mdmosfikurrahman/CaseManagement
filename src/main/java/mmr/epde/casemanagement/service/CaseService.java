@@ -1,16 +1,19 @@
 package mmr.epde.casemanagement.service;
 
-import mmr.epde.casemanagement.model.Case;
+import mmr.epde.casemanagement.model.CaseInfo;
+import mmr.epde.casemanagement.model.CaseResponse;
+import mmr.epde.casemanagement.model.CaseStatus;
+import mmr.epde.casemanagement.model.CourtName;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public interface CaseService {
-    List<Case> getAllCases();
+    CaseInfo createCase(String organizationName, String bin, String caseSummary, CaseStatus caseStatus,
+                        CourtName courtName, Date hearingDate, String verdict, List<String> officersList,
+                        byte[] attachment);
 
-    Optional<Case> getCaseById(Long id);
+    List<CaseInfo> getAllCases();
 
-    Case saveCase(Case caseObject);
-
-    void deleteCase(Long id);
+    List<CaseResponse> getCaseDetails();
 }
