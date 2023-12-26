@@ -1,0 +1,64 @@
+<!-- Create a form to edit an existing case -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Case</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>Edit Case</h1>
+<form action="/cases/edit/{id}" method="post" th:object="${case}">
+    <!-- Include a hidden field for the case ID -->
+    <input type="hidden" th:field="*{id}">
+
+    <label for="organizationName">Organization Name:</label>
+    <input type="text" id="organizationName" name="organizationName" th:field="*{organizationName}" required>
+
+    <!-- Add more input fields as needed -->
+
+    <button type="submit">Save</button>
+</form>
+<a href="/cases">Back to Case List</a>
+</body>
+</html>
