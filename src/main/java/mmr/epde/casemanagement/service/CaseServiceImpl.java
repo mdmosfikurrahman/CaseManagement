@@ -23,15 +23,7 @@ public class CaseServiceImpl implements CaseService {
                                CourtName courtName, Date hearingDate, String verdict, List<String> officersList,
                                byte[] attachment) {
         CaseInfo newCase = new CaseInfo();
-        newCase.setOrganizationName(organizationName);
-        newCase.setBin(bin);
-        newCase.setCaseSummary(caseSummary);
-        newCase.setCaseStatus(caseStatus);
-        newCase.setCourtName(courtName);
-        newCase.setHearingDate(hearingDate);
-        newCase.setVerdict(verdict);
-        newCase.setOfficersList(officersList);
-        newCase.setAttachment(attachment);
+        setValueForCase(organizationName, bin, caseSummary, caseStatus, courtName, hearingDate, verdict, officersList, attachment, newCase);
         return caseRepository.save(newCase);
     }
 
@@ -54,15 +46,7 @@ public class CaseServiceImpl implements CaseService {
                          CourtName courtName, Date hearingDate, String verdict, List<String> officersList,
                          byte[] attachment) {
         caseRepository.findById(id).ifPresent(existingCase -> {
-            existingCase.setOrganizationName(organizationName);
-            existingCase.setBin(bin);
-            existingCase.setCaseSummary(caseSummary);
-            existingCase.setCaseStatus(caseStatus);
-            existingCase.setCourtName(courtName);
-            existingCase.setHearingDate(hearingDate);
-            existingCase.setVerdict(verdict);
-            existingCase.setOfficersList(officersList);
-            existingCase.setAttachment(attachment);
+            setValueForCase(organizationName, bin, caseSummary, caseStatus, courtName, hearingDate, verdict, officersList, attachment, existingCase);
             caseRepository.save(existingCase);
         });
     }
@@ -83,6 +67,18 @@ public class CaseServiceImpl implements CaseService {
                 caseEntity.getOfficersList(),
                 caseEntity.getAttachment()
         );
+    }
+
+    private void setValueForCase(String organizationName, String bin, String caseSummary, CaseStatus caseStatus, CourtName courtName, Date hearingDate, String verdict, List<String> officersList, byte[] attachment, CaseInfo newCase) {
+        newCase.setOrganizationName(organizationName);
+        newCase.setBin(bin);
+        newCase.setCaseSummary(caseSummary);
+        newCase.setCaseStatus(caseStatus);
+        newCase.setCourtName(courtName);
+        newCase.setHearingDate(hearingDate);
+        newCase.setVerdict(verdict);
+        newCase.setOfficersList(officersList);
+        newCase.setAttachment(attachment);
     }
 
 }

@@ -85,7 +85,11 @@
   <span th:text="${caseResponse.verdict}"></span>
 
   <label>Officers List:</label>
-  <span th:text="${caseResponse.officersList}"></span>
+  <ol>
+    <th:block th:each="officer, index : ${caseResponse.officersList}">
+      <li th:text="${officer}"></li>
+    </th:block>
+  </ol>
 
   <!-- Downloadable Attachment Link -->
   <div class="attachment-link">
