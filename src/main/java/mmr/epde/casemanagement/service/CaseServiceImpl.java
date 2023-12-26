@@ -1,10 +1,10 @@
 package mmr.epde.casemanagement.service;
 
 import lombok.RequiredArgsConstructor;
-import mmr.epde.casemanagement.model.CaseInfo;
-import mmr.epde.casemanagement.model.CaseResponse;
-import mmr.epde.casemanagement.model.CaseStatus;
-import mmr.epde.casemanagement.model.CourtName;
+import mmr.epde.casemanagement.model.caseModule.CaseInfo;
+import mmr.epde.casemanagement.model.caseModule.CaseResponse;
+import mmr.epde.casemanagement.model.caseModule.CaseStatus;
+import mmr.epde.casemanagement.model.caseModule.CourtName;
 import mmr.epde.casemanagement.repository.CaseRepository;
 import org.springframework.stereotype.Service;
 

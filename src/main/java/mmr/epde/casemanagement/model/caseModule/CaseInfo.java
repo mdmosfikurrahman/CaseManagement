@@ -1,4 +1,4 @@
-package mmr.epde.casemanagement.model;
+package mmr.epde.casemanagement.model.caseModule;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;

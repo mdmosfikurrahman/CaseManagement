@@ -1,9 +1,9 @@
 package mmr.epde.casemanagement.service;
 
-import mmr.epde.casemanagement.model.CaseInfo;
-import mmr.epde.casemanagement.model.CaseResponse;
-import mmr.epde.casemanagement.model.CaseStatus;
-import mmr.epde.casemanagement.model.CourtName;
+import mmr.epde.casemanagement.model.caseModule.CaseInfo;
+import mmr.epde.casemanagement.model.caseModule.CaseResponse;
+import mmr.epde.casemanagement.model.caseModule.CaseStatus;
+import mmr.epde.casemanagement.model.caseModule.CourtName;
 
 import java.util.Date;
 import java.util.List;

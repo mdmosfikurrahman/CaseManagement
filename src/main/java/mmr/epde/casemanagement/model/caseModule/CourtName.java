@@ -1,4 +1,4 @@
-package mmr.epde.casemanagement.model;
+package mmr.epde.casemanagement.model.caseModule;
 
 public enum CourtName {
     APPEAL_COMMISSIONERATE,

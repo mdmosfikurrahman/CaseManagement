@@ -1,7 +1,10 @@
 package mmr.epde.casemanagement.controller;
 
-import mmr.epde.casemanagement.model.CaseResponse;
-import mmr.epde.casemanagement.model.CaseRequest;
+import lombok.RequiredArgsConstructor;
+import mmr.epde.casemanagement.model.bondApplication.BondApplicationDetails;
+import mmr.epde.casemanagement.model.caseModule.CaseResponse;
+import mmr.epde.casemanagement.model.caseModule.CaseRequest;
+import mmr.epde.casemanagement.repository.BondApplicationDetailsRepository;
 import mmr.epde.casemanagement.service.CaseService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +20,18 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/cases")
 public class CaseController {
 
     private final CaseService caseService;
-
-    public CaseController(CaseService caseService) {
-        this.caseService = caseService;
-    }
+    private final BondApplicationDetailsRepository bondApplicationDetailsRepository;
 
     @GetMapping("/create")
     public String showCreateCaseForm(Model model) {
+        List<BondApplicationDetails> bondApplicationDetailsList = bondApplicationDetailsRepository.findAll();
+        model.addAttribute("bondApplications", bondApplicationDetailsList);
+
         model.addAttribute("caseRequest", new CaseRequest());
         return "createCase";
     }
