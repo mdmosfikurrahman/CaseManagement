@@ -1,30 +1,64 @@
 package mmr.epde.casemanagement.controller;
 
-import lombok.RequiredArgsConstructor;
-import mmr.epde.casemanagement.model.CaseInfo;
 import mmr.epde.casemanagement.model.CaseResponse;
 import mmr.epde.casemanagement.model.CaseRequest;
 import mmr.epde.casemanagement.service.CaseService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-@RestController
-@RequiredArgsConstructor
-@RequestMapping("/api/cases")
+@Controller
+@RequestMapping("/cases")
 public class CaseController {
 
     private final CaseService caseService;
 
-    @PostMapping("/create")
-    public CaseInfo createCase(@RequestBody CaseRequest request) {
-        return caseService.createCase(request.getOrganizationName(), request.getBin(), request.getCaseSummary(),
-                request.getCaseStatus(), request.getCourtName(), request.getHearingDate(),
-                request.getVerdict(), request.getOfficersList(), request.getAttachment());
+    public CaseController(CaseService caseService) {
+        this.caseService = caseService;
     }
 
-    @GetMapping("/getCaseDetails")
-    public List<CaseResponse> getCaseDetails() {
-        return caseService.getCaseDetails();
+    @GetMapping("/create")
+    public String showCreateCaseForm(Model model) {
+        model.addAttribute("caseRequest", new CaseRequest());
+        return "createCase";
+    }
+
+    @PostMapping("/create")
+    public String createCase(@ModelAttribute CaseRequest caseRequest,
+                             BindingResult result) throws IOException, ParseException {
+        if (result.hasErrors()) {
+            return "createCase";
+        }
+
+        caseService.createCase(caseRequest.getOrganizationName(), caseRequest.getBin(), caseRequest.getCaseSummary(),
+                caseRequest.getCaseStatus(), caseRequest.getCourtName(), parseDate(caseRequest.getHearingDate()),
+                caseRequest.getVerdict(), caseRequest.getOfficersList(), caseRequest.getAttachment().getBytes());
+
+        return "redirect:/cases/list";
+    }
+
+
+    private Date parseDate(String dateStr) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.parse(dateStr);
+    }
+
+
+
+
+    @GetMapping("/list")
+    public String showCaseList(Model model) {
+        List<CaseResponse> caseList = caseService.getCaseDetails();
+        model.addAttribute("caseList", caseList);
+        return "caseList";
     }
 }
+

@@ -1,8 +1,9 @@
 package mmr.epde.casemanagement.model;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -12,8 +13,9 @@ public class CaseRequest {
     private String caseSummary;
     private CaseStatus caseStatus;
     private CourtName courtName;
-    private Date hearingDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String hearingDate;
     private String verdict;
     private List<String> officersList;
-    private byte[] attachment;
+    private MultipartFile attachment;
 }

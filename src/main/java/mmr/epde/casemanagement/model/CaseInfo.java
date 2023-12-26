@@ -34,5 +34,6 @@ public class CaseInfo {
     @ElementCollection
     private List<String> officersList;
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] attachment;
 }
