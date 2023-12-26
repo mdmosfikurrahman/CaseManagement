@@ -91,10 +91,13 @@ public class CaseServiceImpl implements CaseService {
 
         if (lastId == null) {
             lastId = 1L;
+        } else {
+            lastId++;
         }
 
         String formattedId = String.format("%04d", lastId);
 
         return formattedDate + formattedId;
     }
+
 }
