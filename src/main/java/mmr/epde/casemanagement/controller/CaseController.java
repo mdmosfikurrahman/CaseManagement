@@ -114,7 +114,7 @@ public class CaseController {
         CaseResponse caseResponse = caseService.getCaseDetailsById(id);
 
         if (caseResponse != null && caseResponse.getAttachment() != null) {
-            String bin = caseResponse.getBin();
+            String bin = caseResponse.getCaseNo();
 
             String safeFilename = bin.replaceAll("[^a-zA-Z0-9.-]", "_");
 
